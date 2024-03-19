@@ -182,8 +182,8 @@
             document.getElementById('winnerModal').style.display = 'flex';
           }, 10);
         } else if (board.every(cell => cell !== '')) {
-          alert('It\'s a tie!');
-          resetGame();
+          document.getElementById('winnerText').innerText = `It's a tie!`;
+          document.getElementById('winnerModal').style.display = 'flex';
         } else {
           currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
           document.getElementById('turnDisplay').innerText = `Current Turn: ${currentPlayer}`;
@@ -196,12 +196,12 @@
       board = ['', '', '', '', '', '', '', '', ''];
       document.querySelectorAll('.cell').forEach(cell => cell.innerText = '');
       document.getElementById('turnDisplay').innerText = `Current Turn: ${currentPlayer}`;
-    }
-
-    function playAgain() {
       document.getElementById('winnerModal').style.display = 'none';
-      resetGame();
-    }
-  </script>
+      }
+
+function playAgain() {
+  resetGame();
+}
+      </script>
 </body>
 </html>
