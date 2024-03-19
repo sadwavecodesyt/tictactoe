@@ -72,6 +72,25 @@
     .reset-button:hover {
       background-color: #cccccc;
     }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ffffff;
+    }
+
+    .winner-animation {
+      animation: pulse 0.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.1);
+      }
+    }
   </style>
 </head>
 <body>
@@ -88,6 +107,7 @@
   </div>
   <div class="turn" id="turnDisplay">Current Turn: X</div>
   <button class="reset-button" onclick="resetGame()">Reset Game</button>
+  <div class="footer">Created by Sadwave</div>
   <script>
     let currentPlayer = 'X';
     let board = ['', '', '', '', '', '', '', '', ''];
@@ -118,8 +138,12 @@
         document.getElementById('board').children[index].innerText = currentPlayer;
         const winner = checkWinner();
         if (winner) {
-          alert(`${winner} wins!`);
-          resetGame();
+          document.getElementById('turnDisplay').classList.remove('winner-animation');
+          setTimeout(() => {
+            document.getElementById('turnDisplay').classList.add('winner-animation');
+            alert(`${winner} wins!`);
+            resetGame();
+          }, 10);
         } else if (board.every(cell => cell !== '')) {
           alert('It\'s a tie!');
           resetGame();
