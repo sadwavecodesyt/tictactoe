@@ -79,17 +79,46 @@
       color: #ffffff;
     }
 
-    .winner-animation {
-      animation: pulse 0.5s infinite alternate;
+    .winner-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 999;
+      display: none;
     }
 
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-      100% {
-        transform: scale(1.1);
-      }
+    .winner-content {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .winner-text {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .play-again-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .play-again-button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
@@ -108,6 +137,14 @@
   <div class="turn" id="turnDisplay">Current Turn: X</div>
   <button class="reset-button" onclick="resetGame()">Reset Game</button>
   <div class="footer">Created by Sadwave</div>
+
+  <div id="winnerModal" class="winner-modal">
+    <div class="winner-content">
+      <div class="winner-text" id="winnerText"></div>
+      <button class="play-again-button" onclick="playAgain()">Play Again</button>
+    </div>
+  </div>
+
   <script>
     let currentPlayer = 'X';
     let board = ['', '', '', '', '', '', '', '', ''];
@@ -141,8 +178,8 @@
           document.getElementById('turnDisplay').classList.remove('winner-animation');
           setTimeout(() => {
             document.getElementById('turnDisplay').classList.add('winner-animation');
-            alert(`${winner} wins!`);
-            resetGame();
+            document.getElementById('winnerText').innerText = `${winner} wins!`;
+            document.getElementById('winnerModal').style.display = 'flex';
           }, 10);
         } else if (board.every(cell => cell !== '')) {
           alert('It\'s a tie!');
@@ -159,6 +196,11 @@
       board = ['', '', '', '', '', '', '', '', ''];
       document.querySelectorAll('.cell').forEach(cell => cell.innerText = '');
       document.getElementById('turnDisplay').innerText = `Current Turn: ${currentPlayer}`;
+    }
+
+    function playAgain() {
+      document.getElementById('winnerModal').style.display = 'none';
+      resetGame();
     }
   </script>
 </body>
